@@ -125,21 +125,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 source: "FB_Ads_Landing_Page"
             };
 
+            // Add submission timestamp
+            formData.submitted_at = new Date().toISOString();
+
             console.log("Form Data Prepared:", formData);
 
             try {
-                // Simulated submission — replace with real webhook URL
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                /* 
-                // Actual webhook POST when URL is provided:
-                const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
+                // POST to n8n webhook → Google Sheets
+                const WEBHOOK_URL = 'https://miniature-ugt6x.crab.containers.automata.host/webhook/d074af58-c29d-461b-89ea-dd527663b959';
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
-                */
 
                 // Show Success State
                 leadForm.classList.add('hidden');

@@ -1,0 +1,134 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d074af58-c29d-461b-89ea-dd527663b959",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "5e319dd2-05e1-4846-b85c-db2e6863316b",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        432,
+        112
+      ],
+      "webhookId": "d074af58-c29d-461b-89ea-dd527663b959"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1zE-E9mOqXaJlyr9nMRO0EbW2VUOu_R-9ohkzfUnbkqY",
+          "mode": "list",
+          "cachedResultName": "Landing Page Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zE-E9mOqXaJlyr9nMRO0EbW2VUOu_R-9ohkzfUnbkqY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zE-E9mOqXaJlyr9nMRO0EbW2VUOu_R-9ohkzfUnbkqY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATE & TIME": "={{ $json.body.submitted_at }}",
+            "NAME": "={{ $json.body.name }}",
+            "NUMBER": "={{ $json.body.phone }}",
+            "EMAIL": "={{ $json.body.email }}",
+            "DESIGNATION": "={{ $json.body.interest }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATE & TIME",
+              "displayName": "DATE & TIME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NAME",
+              "displayName": "NAME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NUMBER",
+              "displayName": "NUMBER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DESIGNATION",
+              "displayName": "DESIGNATION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "1de7c9dd-cd60-46dc-890a-73d964c15801",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        688,
+        112
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "x92OK6wvSgpYrFFT",
+          "name": "N8N POPEYAI"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aeab820de613e086cb812a3f1e5c372866b167b2d756a8b9bc767a88245c7b1e"
+  }
+}
