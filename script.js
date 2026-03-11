@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ==========================================
-// Three.js AI Robot Hero  (Aggressive War-Machine)
+// Three.js AI Robot Hero — Premium Humanoid with Neuron Halo
 // ==========================================
 (function initHeroRobot() {
     if (typeof THREE === 'undefined') return;
@@ -424,273 +424,481 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(W, H);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
 
     const scene  = new THREE.Scene();
-    // Camera low — looking UP at robot (imposing)
-    const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 100);
-    camera.position.set(0, -0.8, 8.5);
-    camera.lookAt(0, 0.8, 0);
+    const camera = new THREE.PerspectiveCamera(36, W / H, 0.1, 120);
+    camera.position.set(0, 0.4, 9.5);
+    camera.lookAt(0, 0.6, 0);
+
+    // ── Color Palette ────────────────────────────────────
+    const C = {
+        body:    0x0a0a0a,
+        chrome:  0x1a1a1a,
+        panel:   0x111111,
+        cyan:    0x00e5ff,
+        teal:    0x00bcd4,
+        lime:    0xAED534,
+        blue:    0x3366ff,
+        white:   0xffffff,
+    };
 
     // ── Materials ────────────────────────────────────────
-    const darkMetal = new THREE.MeshPhongMaterial({ color: 0x080808, specular: 0xcccccc, shininess: 450 });
-    const gunmetal  = new THREE.MeshPhongMaterial({ color: 0x111111, specular: 0x999999, shininess: 250 });
-    const armorPlate= new THREE.MeshPhongMaterial({ color: 0x0d0d0d, specular: 0xaaaaaa, shininess: 320 });
-    const redGlow   = new THREE.MeshBasicMaterial({ color: 0xff1800 });
-    const redDim    = new THREE.MeshBasicMaterial({ color: 0xff1800, transparent: true, opacity: 0.35 });
-    const limeMat   = new THREE.MeshBasicMaterial({ color: 0xAED534 });
-    const limeDim   = new THREE.MeshBasicMaterial({ color: 0xAED534, transparent: true, opacity: 0.5 });
+    const bodyMat    = new THREE.MeshPhongMaterial({ color: C.body,   specular: 0x666666, shininess: 600 });
+    const chromeMat  = new THREE.MeshPhongMaterial({ color: C.chrome, specular: 0xcccccc, shininess: 800 });
+    const panelMat   = new THREE.MeshPhongMaterial({ color: C.panel,  specular: 0x888888, shininess: 400 });
+    const cyanGlow   = new THREE.MeshBasicMaterial({ color: C.cyan });
+    const cyanDim    = new THREE.MeshBasicMaterial({ color: C.cyan,  transparent: true, opacity: 0.4 });
+    const limeGlow   = new THREE.MeshBasicMaterial({ color: C.lime });
+    const limeDim    = new THREE.MeshBasicMaterial({ color: C.lime,  transparent: true, opacity: 0.45 });
+    const tealGlow   = new THREE.MeshBasicMaterial({ color: C.teal,  transparent: true, opacity: 0.6 });
 
-    // ── Robot ─────────────────────────────────────────────
+    // ── Robot Group ──────────────────────────────────────
     const robot = new THREE.Group();
-    robot.rotation.y = -0.18;
-    robot.rotation.x =  0.06; // looks down at viewer — imposing
+    robot.rotation.y = -0.1;
 
-    // ═══ HEAD (angular box-based — war machine) ═══
+    // ═══ HEAD — Smooth sphere-based humanoid ═══
     const headG = new THREE.Group();
-    headG.position.y = 1.6;
+    headG.position.y = 2.0;
 
-    // Main skull — angular box, not a sphere
-    headG.add(new THREE.Mesh(new THREE.BoxGeometry(2.0, 2.1, 1.75), darkMetal));
+    // Main skull — smooth sphere
+    const skull = new THREE.Mesh(new THREE.SphereGeometry(1.05, 32, 24), bodyMat);
+    skull.scale.set(1.0, 1.1, 0.95);
+    headG.add(skull);
 
-    // Heavy brow ridge — overhanging, key menacing feature
-    const brow = new THREE.Mesh(new THREE.BoxGeometry(2.25, 0.32, 0.6), gunmetal);
-    brow.position.set(0, 0.72, 0.62);
-    brow.rotation.x = -0.08;
-    headG.add(brow);
+    // Forehead plate — subtle ridge
+    const foreheadPlate = new THREE.Mesh(
+        new THREE.SphereGeometry(1.08, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.35),
+        chromeMat
+    );
+    foreheadPlate.position.y = 0.12;
+    headG.add(foreheadPlate);
 
-    // Cheek plates — angular, protruding outward
-    const ckGeo = new THREE.BoxGeometry(0.4, 0.95, 0.65);
-    const ckL = new THREE.Mesh(ckGeo, gunmetal);
-    ckL.position.set(-1.2, -0.08, 0.28); ckL.rotation.y = 0.14;
-    headG.add(ckL);
-    const ckR = new THREE.Mesh(ckGeo, gunmetal);
-    ckR.position.set( 1.2, -0.08, 0.28); ckR.rotation.y = -0.14;
-    headG.add(ckR);
+    // Visor — curved glowing band across the face
+    const visorGeo = new THREE.TorusGeometry(1.0, 0.065, 8, 48, Math.PI * 0.55);
+    const visor = new THREE.Mesh(visorGeo, cyanGlow);
+    visor.rotation.set(Math.PI * 0.48, 0, Math.PI * 0.275);
+    visor.position.set(0, 0.08, 0.28);
+    headG.add(visor);
 
-    // Chin block
-    headG.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(1.15, 0.35, 0.6), gunmetal),
-        { position: new THREE.Vector3(0, -1.12, 0.2) }));
+    // Visor glow haze
+    const visorHaze = new THREE.Mesh(
+        new THREE.TorusGeometry(1.0, 0.14, 8, 48, Math.PI * 0.55),
+        new THREE.MeshBasicMaterial({ color: C.cyan, transparent: true, opacity: 0.12 })
+    );
+    visorHaze.rotation.copy(visor.rotation);
+    visorHaze.position.copy(visor.position);
+    headG.add(visorHaze);
 
-    // Visor slit — narrow red glowing line (Terminator-style)
-    const visorSlit = new THREE.Mesh(new THREE.BoxGeometry(1.62, 0.13, 0.06), redGlow);
-    visorSlit.position.set(0, 0.22, 0.9);
-    headG.add(visorSlit);
-
-    // Visor under-glow
-    headG.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(1.64, 0.07, 0.05), redDim),
-        { position: new THREE.Vector3(0, 0.13, 0.88) }));
-
-    // Eye point lights (red, close to visor)
-    const eyeLtL = new THREE.PointLight(0xff1800, 3.5, 3.2);
-    eyeLtL.position.set(-0.4, 0.22, 1.1);
+    // Eye lights — cyan
+    const eyeLtL = new THREE.PointLight(C.cyan, 4.0, 4.0);
+    eyeLtL.position.set(-0.35, 0.15, 1.0);
     headG.add(eyeLtL);
-    const eyeLtR = new THREE.PointLight(0xff1800, 3.5, 3.2);
-    eyeLtR.position.set( 0.4, 0.22, 1.1);
+    const eyeLtR = new THREE.PointLight(C.cyan, 4.0, 4.0);
+    eyeLtR.position.set(0.35, 0.15, 1.0);
     headG.add(eyeLtR);
 
-    // Crown crest + side horns
-    headG.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.58, 0.38), darkMetal),
-        { position: new THREE.Vector3(0, 1.22, 0) }));
-    const hornGeo = new THREE.ConeGeometry(0.13, 0.6, 5);
-    const hornL = new THREE.Mesh(hornGeo, gunmetal);
-    hornL.position.set(-0.88, 1.2, 0); headG.add(hornL);
-    const hornR = new THREE.Mesh(hornGeo, gunmetal);
-    hornR.position.set( 0.88, 1.2, 0); headG.add(hornR);
+    // Chin contour
+    const chin = new THREE.Mesh(
+        new THREE.SphereGeometry(0.4, 16, 12),
+        chromeMat
+    );
+    chin.scale.set(1.3, 0.6, 0.8);
+    chin.position.set(0, -0.85, 0.3);
+    headG.add(chin);
 
-    // Temple plates
-    const tpGeo = new THREE.BoxGeometry(0.09, 0.55, 0.52);
-    headG.add(Object.assign(new THREE.Mesh(tpGeo, armorPlate), { position: new THREE.Vector3(-1.06, 0.18, 0) }));
-    headG.add(Object.assign(new THREE.Mesh(tpGeo, armorPlate), { position: new THREE.Vector3( 1.06, 0.18, 0) }));
+    // Side panels (temple)
+    const templeGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.55, 8);
+    const templeL = new THREE.Mesh(templeGeo, panelMat);
+    templeL.rotation.z = Math.PI / 2;
+    templeL.position.set(-1.02, 0.1, 0);
+    headG.add(templeL);
+    const templeR = templeL.clone();
+    templeR.position.set(1.02, 0.1, 0);
+    headG.add(templeR);
 
-    // Back vents
-    for (let i = 0; i < 5; i++) {
-        const v = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.07, 0.09),
-            new THREE.MeshBasicMaterial({ color: 0x1c1c1c }));
-        v.position.set(0, 0.52 - i * 0.23, -0.9);
-        headG.add(v);
+    // Antenna / crown element
+    const antennaCone = new THREE.Mesh(
+        new THREE.ConeGeometry(0.06, 0.45, 6),
+        cyanGlow
+    );
+    antennaCone.position.set(0, 1.35, 0);
+    headG.add(antennaCone);
+
+    // Small data strips on forehead
+    for (let i = 0; i < 3; i++) {
+        const strip = new THREE.Mesh(
+            new THREE.BoxGeometry(0.45 - i * 0.1, 0.025, 0.04),
+            i === 0 ? limeGlow : limeDim
+        );
+        strip.position.set(0, 0.65 + i * 0.12, 0.85 - i * 0.08);
+        headG.add(strip);
     }
-
-    // Lime data strip on forehead
-    headG.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.035, 0.05), limeMat),
-        { position: new THREE.Vector3(0, 0.62, 0.9) }));
 
     robot.add(headG);
 
-    // ═══ NECK (hydraulic, mechanical) ═══
+    // ═══ NECK — Cylindrical with tech rings ═══
     const neckG = new THREE.Group();
-    neckG.position.y = 0.38;
-    neckG.add(new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.6, 0.45), darkMetal));
-    // Hydraulic pistons
-    const pistGeo = new THREE.CylinderGeometry(0.07, 0.07, 0.62, 8);
-    const pistL = new THREE.Mesh(pistGeo, gunmetal); pistL.rotation.z = 0.28; pistL.position.set(-0.45, 0, 0);
-    neckG.add(pistL);
-    const pistR = new THREE.Mesh(pistGeo, gunmetal); pistR.rotation.z = -0.28; pistR.position.set( 0.45, 0, 0);
-    neckG.add(pistR);
-    // Collar armor
-    neckG.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.22, 0.68), gunmetal),
-        { position: new THREE.Vector3(0, -0.38, 0) }));
+    neckG.position.y = 0.72;
+
+    const neckCore = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.32, 0.38, 0.6, 16),
+        bodyMat
+    );
+    neckG.add(neckCore);
+
+    // Neck tech rings
+    for (let i = 0; i < 3; i++) {
+        const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(0.36 + i * 0.02, 0.025, 8, 32),
+            i === 1 ? cyanDim : panelMat
+        );
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = 0.15 - i * 0.15;
+        neckG.add(ring);
+    }
+
+    // Hydraulic cables
+    const cableGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.65, 6);
+    [-0.38, 0.38].forEach(x => {
+        const cable = new THREE.Mesh(cableGeo, chromeMat);
+        cable.position.set(x, 0, 0.1);
+        cable.rotation.z = x > 0 ? -0.15 : 0.15;
+        neckG.add(cable);
+    });
+
     robot.add(neckG);
 
-    // ═══ CHEST (wide, armored, imposing) ═══
+    // ═══ TORSO — Wide, rounded, armored ═══
     const torsoG = new THREE.Group();
-    torsoG.position.y = -0.95;
+    torsoG.position.y = -0.55;
 
-    // Main chest — wide and thick
-    torsoG.add(new THREE.Mesh(new THREE.BoxGeometry(3.1, 1.55, 0.85), darkMetal));
-    // Center spine ridge
-    torsoG.add(new THREE.Mesh(new THREE.BoxGeometry(0.2, 1.58, 0.92), armorPlate));
-    // Angled side armor panels
-    const sideGeo = new THREE.BoxGeometry(0.55, 1.55, 0.78);
-    const sideL = new THREE.Mesh(sideGeo, gunmetal); sideL.position.set(-1.82, 0, 0); sideL.rotation.y = 0.14; torsoG.add(sideL);
-    const sideR = new THREE.Mesh(sideGeo, gunmetal); sideR.position.set( 1.82, 0, 0); sideR.rotation.y =-0.14; torsoG.add(sideR);
+    // Main chest — capsule-like shape
+    const chestGeo = new THREE.SphereGeometry(1.5, 32, 24);
+    const chest = new THREE.Mesh(chestGeo, bodyMat);
+    chest.scale.set(1.1, 0.75, 0.6);
+    torsoG.add(chest);
 
-    // Red power core — center chest (spinning octahedron)
-    const core = new THREE.Mesh(new THREE.OctahedronGeometry(0.24, 0), redGlow);
-    core.position.set(0, 0.18, 0.48);
+    // Center chest ridge
+    const chestRidge = new THREE.Mesh(
+        new THREE.BoxGeometry(0.12, 1.5, 0.75),
+        chromeMat
+    );
+    torsoG.add(chestRidge);
+
+    // Chest core — spinning octahedron (cyan instead of red)
+    const core = new THREE.Mesh(
+        new THREE.OctahedronGeometry(0.22, 1),
+        cyanGlow
+    );
+    core.position.set(0, 0.15, 0.55);
     torsoG.add(core);
-    const coreLt = new THREE.PointLight(0xff1800, 4, 5);
-    coreLt.position.set(0, 0.18, 0.75);
+
+    // Core light
+    const coreLt = new THREE.PointLight(C.cyan, 5, 6);
+    coreLt.position.set(0, 0.15, 0.8);
     torsoG.add(coreLt);
 
-    // Lime power strips on chest flanks
-    const stripGeo = new THREE.BoxGeometry(0.58, 0.038, 0.06);
-    for (let i = 0; i < 4; i++) {
-        const sL = new THREE.Mesh(stripGeo, i === 0 ? limeMat : limeDim);
-        sL.position.set(-0.88, 0.38 - i * 0.2, 0.45); torsoG.add(sL);
-        const sR = new THREE.Mesh(stripGeo, i === 0 ? limeMat : limeDim);
-        sR.position.set( 0.88, 0.38 - i * 0.2, 0.45); torsoG.add(sR);
+    // Chest panel lines (lime data strips)
+    for (let i = 0; i < 5; i++) {
+        const stripL = new THREE.Mesh(
+            new THREE.BoxGeometry(0.5, 0.028, 0.04),
+            i < 2 ? limeGlow : limeDim
+        );
+        stripL.position.set(-0.72, 0.35 - i * 0.17, 0.48);
+        torsoG.add(stripL);
+
+        const stripR = stripL.clone();
+        stripR.position.set(0.72, 0.35 - i * 0.17, 0.48);
+        torsoG.add(stripR);
     }
 
-    // Shoulder armor — angular with spike
+    // ═══ SHOULDER PADS — Rounded armor ═══
     function makeShoulder(side) {
         const g = new THREE.Group();
-        g.add(new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.0, 0.9), darkMetal));
-        // Angled top plate
-        const top = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.2, 0.95), gunmetal);
-        top.position.y = 0.48; top.rotation.z = side * 0.12; g.add(top);
-        // Spike
-        const spike = new THREE.Mesh(new THREE.ConeGeometry(0.13, 0.72, 5), gunmetal);
-        spike.position.y = 0.85; g.add(spike);
-        // Red accent line on shoulder
-        const acc = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.04, 0.06), redGlow);
-        acc.position.set(0, 0.2, 0.47); g.add(acc);
+
+        // Main dome
+        const dome = new THREE.Mesh(
+            new THREE.SphereGeometry(0.58, 20, 16),
+            chromeMat
+        );
+        dome.scale.set(1.2, 0.8, 1.0);
+        g.add(dome);
+
+        // Accent ring
+        const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(0.55, 0.035, 8, 24),
+            cyanDim
+        );
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = -0.05;
+        g.add(ring);
+
+        // Top spike/antenna
+        const spike = new THREE.Mesh(
+            new THREE.ConeGeometry(0.08, 0.55, 6),
+            panelMat
+        );
+        spike.position.y = 0.6;
+        g.add(spike);
+
+        // Glowing tip
+        const tip = new THREE.Mesh(
+            new THREE.SphereGeometry(0.05, 8, 8),
+            cyanGlow
+        );
+        tip.position.y = 0.85;
+        g.add(tip);
+
         return g;
     }
-    const shL = makeShoulder(-1); shL.position.set(-2.05, 0.42, 0); torsoG.add(shL);
-    const shR = makeShoulder( 1); shR.position.set( 2.05, 0.42, 0); torsoG.add(shR);
 
-    // Upper arms
-    const armGeo = new THREE.CylinderGeometry(0.23, 0.19, 1.05, 10);
-    const armL = new THREE.Mesh(armGeo, darkMetal); armL.position.set(-2.1, -0.55, 0); torsoG.add(armL);
-    const armR = new THREE.Mesh(armGeo, darkMetal); armR.position.set( 2.1, -0.55, 0); torsoG.add(armR);
-    // Arm rings
-    [-0.1, -0.38, -0.66].forEach(y => {
-        const rGeo = new THREE.TorusGeometry(0.24, 0.03, 6, 20);
-        const rL = new THREE.Mesh(rGeo, gunmetal); rL.rotation.x = Math.PI/2; rL.position.set(-2.1, y+0.52, 0); torsoG.add(rL);
-        const rR = rL.clone(); rR.position.set(2.1, y+0.52, 0); torsoG.add(rR);
-    });
+    const shL = makeShoulder(-1);
+    shL.position.set(-1.75, 0.35, 0);
+    torsoG.add(shL);
+
+    const shR = makeShoulder(1);
+    shR.position.set(1.75, 0.35, 0);
+    torsoG.add(shR);
+
+    // ═══ ARMS — Segmented cylinders ═══
+    function makeArm() {
+        const g = new THREE.Group();
+
+        // Upper arm
+        const upper = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.2, 0.17, 1.1, 12),
+            bodyMat
+        );
+        g.add(upper);
+
+        // Elbow joint
+        const elbow = new THREE.Mesh(
+            new THREE.SphereGeometry(0.18, 12, 10),
+            chromeMat
+        );
+        elbow.position.y = -0.6;
+        g.add(elbow);
+
+        // Arm tech rings
+        [0.2, 0, -0.2].forEach((y, i) => {
+            const ring = new THREE.Mesh(
+                new THREE.TorusGeometry(0.2, 0.02, 6, 20),
+                i === 1 ? cyanDim : panelMat
+            );
+            ring.rotation.x = Math.PI / 2;
+            ring.position.y = y;
+            g.add(ring);
+        });
+
+        return g;
+    }
+
+    const armL = makeArm();
+    armL.position.set(-1.8, -0.4, 0);
+    torsoG.add(armL);
+
+    const armR = makeArm();
+    armR.position.set(1.8, -0.4, 0);
+    torsoG.add(armR);
 
     robot.add(torsoG);
 
-    // ═══ DECORATIVE RINGS ═══
-    function makeRing(radius, color, opacity, tiltX, tiltY, posY) {
+    // ═══ NEURON HALO RINGS — Orbiting rings of light ═══
+    const haloGroup = new THREE.Group();
+    haloGroup.position.y = 1.0;
+
+    const haloRings = [];
+    const haloConfigs = [
+        { radius: 2.4, color: C.cyan, opacity: 0.35, tiltX: 1.2,   tiltY: 0.0,  speed:  0.25, dashSize: 0.18, gapSize: 0.12 },
+        { radius: 2.9, color: C.lime, opacity: 0.22, tiltX: -0.6,  tiltY: 0.4,  speed: -0.18, dashSize: 0.22, gapSize: 0.14 },
+        { radius: 3.5, color: C.teal, opacity: 0.18, tiltX: 0.3,   tiltY: -0.3, speed:  0.12, dashSize: 0.15, gapSize: 0.2  },
+        { radius: 4.2, color: C.blue, opacity: 0.12, tiltX: -1.0,  tiltY: 0.2,  speed: -0.08, dashSize: 0.25, gapSize: 0.18 },
+    ];
+
+    haloConfigs.forEach(cfg => {
         const pts = [];
-        for (let i = 0; i <= 256; i++) {
-            const a = (i / 256) * Math.PI * 2;
-            pts.push(new THREE.Vector3(Math.cos(a) * radius, Math.sin(a) * radius, 0));
+        const segs = 256;
+        for (let i = 0; i <= segs; i++) {
+            const a = (i / segs) * Math.PI * 2;
+            pts.push(new THREE.Vector3(Math.cos(a) * cfg.radius, Math.sin(a) * cfg.radius, 0));
         }
         const geo = new THREE.BufferGeometry().setFromPoints(pts);
-        const mat = new THREE.LineDashedMaterial({ color, transparent: true, opacity, dashSize: 0.14, gapSize: 0.1 });
+        const mat = new THREE.LineDashedMaterial({
+            color: cfg.color,
+            transparent: true,
+            opacity: cfg.opacity,
+            dashSize: cfg.dashSize,
+            gapSize: cfg.gapSize,
+        });
         const line = new THREE.Line(geo, mat);
         line.computeLineDistances();
-        line.rotation.x = tiltX; line.rotation.y = tiltY; line.position.y = posY;
-        return line;
-    }
-    const ring1 = makeRing(3.0, 0xff1800, 0.28,  0.14, 0.05, 0.9);
-    const ring2 = makeRing(3.8, 0xAED534, 0.15, -0.75, 0.28, 0.3);
-    scene.add(ring1, ring2);
+        line.rotation.x = cfg.tiltX;
+        line.rotation.y = cfg.tiltY;
+        line._speed = cfg.speed;
+        line._baseTiltX = cfg.tiltX;
+        haloRings.push(line);
+        haloGroup.add(line);
+    });
 
-    // ═══ FLOATING NODES ═══
-    const nodes = [];
-    const redNodeMat  = new THREE.MeshBasicMaterial({ color: 0xff1800 });
-    const limeNodeMat = new THREE.MeshBasicMaterial({ color: 0xAED534 });
-    for (let i = 0; i < 10; i++) {
-        const mat = i % 3 === 0 ? limeNodeMat : redNodeMat;
-        const n = new THREE.Mesh(new THREE.OctahedronGeometry(0.055, 0), mat);
-        const ang = (i / 10) * Math.PI * 2;
-        const rad = 3.2 + Math.random() * 0.9;
-        n.position.set(Math.cos(ang) * rad, (Math.random() - 0.5) * 3.5, Math.sin(ang) * rad);
-        n._ang = ang; n._rad = rad; n._spd = 0.005 + Math.random() * 0.004;
-        nodes.push(n); scene.add(n);
+    scene.add(haloGroup);
+
+    // ═══ NEURON DATA NODES — orbiting particles ═══
+    const dataNodes = [];
+    const nodeMats = [
+        new THREE.MeshBasicMaterial({ color: C.cyan }),
+        new THREE.MeshBasicMaterial({ color: C.lime }),
+        new THREE.MeshBasicMaterial({ color: C.teal }),
+    ];
+
+    for (let i = 0; i < 18; i++) {
+        const mat = nodeMats[i % 3];
+        const size = 0.04 + Math.random() * 0.04;
+        const n = new THREE.Mesh(new THREE.IcosahedronGeometry(size, 0), mat);
+        const ang = (i / 18) * Math.PI * 2 + Math.random() * 0.3;
+        const rad = 2.2 + Math.random() * 2.2;
+        const ht  = (Math.random() - 0.5) * 4.5;
+        n.position.set(Math.cos(ang) * rad, ht + 1.0, Math.sin(ang) * rad);
+        n._ang = ang;
+        n._rad = rad;
+        n._ht  = ht + 1.0;
+        n._spd = 0.003 + Math.random() * 0.005;
+        n._bobSpd = 0.5 + Math.random() * 1.5;
+        n._bobAmp = 0.05 + Math.random() * 0.1;
+        dataNodes.push(n);
+        scene.add(n);
     }
+
+    // Node connection lines (neural network effect)
+    const NODE_LINK_DIST = 3.0;
+    const MAX_NODE_SEGS = 100;
+    const nodeLinePos = new Float32Array(MAX_NODE_SEGS * 6);
+    const nodeLineGeo = new THREE.BufferGeometry();
+    nodeLineGeo.setAttribute('position', new THREE.BufferAttribute(nodeLinePos, 3).setUsage(THREE.DynamicDrawUsage));
+    nodeLineGeo.setDrawRange(0, 0);
+    const nodeLineMat = new THREE.LineBasicMaterial({ color: C.cyan, transparent: true, opacity: 0.1 });
+    const nodeLines = new THREE.LineSegments(nodeLineGeo, nodeLineMat);
+    scene.add(nodeLines);
 
     scene.add(robot);
 
     // ── Lights ────────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(0x110000, 0.7));          // dark red ambient
+    // Soft blue-white ambient
+    scene.add(new THREE.AmbientLight(0x0a0a18, 1.0));
 
-    const keyLt = new THREE.DirectionalLight(0xffffff, 5.5);   // top-right chrome key
-    keyLt.position.set(4, 8, 4); scene.add(keyLt);
+    // Key light — cool white from top-right
+    const keyLt = new THREE.DirectionalLight(0xeeeeff, 5.0);
+    keyLt.position.set(5, 8, 5);
+    scene.add(keyLt);
 
-    const rimLt = new THREE.DirectionalLight(0xffffff, 2.8);   // back-left rim
-    rimLt.position.set(-5, 4, -4); scene.add(rimLt);
+    // Rim light — cold blue from back-left
+    const rimLt = new THREE.DirectionalLight(0x6688ff, 3.0);
+    rimLt.position.set(-6, 5, -5);
+    scene.add(rimLt);
 
-    const redUnder = new THREE.PointLight(0xff1800, 5, 14);    // menacing red from below
-    redUnder.position.set(0, -5, 3); scene.add(redUnder);
+    // Teal under-glow
+    const underLt = new THREE.PointLight(C.teal, 3.5, 14);
+    underLt.position.set(0, -5, 4);
+    scene.add(underLt);
 
-    const limeLt = new THREE.PointLight(0xAED534, 2.5, 10);    // lime accent front
-    limeLt.position.set(3, 2, 6); scene.add(limeLt);
+    // Lime accent from front-right
+    const limeLt = new THREE.PointLight(C.lime, 2.0, 12);
+    limeLt.position.set(4, 2, 7);
+    scene.add(limeLt);
 
-    // ── Mouse ─────────────────────────────────────────────
+    // Cyan from front-left
+    const cyanLt = new THREE.PointLight(C.cyan, 1.5, 10);
+    cyanLt.position.set(-3, 3, 6);
+    scene.add(cyanLt);
+
+    // ── Mouse tracking ───────────────────────────────────
     let mx = 0, my = 0;
     document.addEventListener('mousemove', e => {
         mx = (e.clientX / window.innerWidth  - 0.5) * 2;
         my = (e.clientY / window.innerHeight - 0.5) * 2;
     }, { passive: true });
 
-    // ── Animate ───────────────────────────────────────────
+    // ── Animate ──────────────────────────────────────────
     let t = 0;
     function animate() {
         requestAnimationFrame(animate);
-        t += 0.006;
+        t += 0.005;
 
-        // Slow auto-rotation + mouse look
-        const tgtY = -0.18 + mx * 0.28 + t * 0.04;
-        const tgtX =  0.06 + my * -0.1;
-        robot.rotation.y += (tgtY - robot.rotation.y) * 0.04;
-        robot.rotation.x += (tgtX - robot.rotation.x) * 0.04;
+        // Robot follows cursor smoothly + gentle auto-rotation
+        const tgtY = -0.1 + mx * 0.22 + Math.sin(t * 0.15) * 0.08;
+        const tgtX =  0.04 + my * -0.08;
+        robot.rotation.y += (tgtY - robot.rotation.y) * 0.035;
+        robot.rotation.x += (tgtX - robot.rotation.x) * 0.035;
 
-        // Power bob (subtle)
-        robot.position.y = Math.sin(t * 0.55) * 0.07;
+        // Gentle hover bob
+        robot.position.y = Math.sin(t * 0.4) * 0.06;
 
-        // Rings spin (aggressive, fast)
-        ring1.rotation.z =  t * 0.45;
-        ring2.rotation.z = -t * 0.28;
+        // Halo rings rotate + cursor reactivity
+        const cursorDist = Math.sqrt(mx * mx + my * my);
+        haloRings.forEach((ring, i) => {
+            ring.rotation.z += ring._speed * 0.012 * (1 + cursorDist * 0.3);
+            // Subtle tilt response to cursor
+            ring.rotation.x = ring._baseTiltX + my * 0.05 * (i % 2 === 0 ? 1 : -1);
+        });
 
-        // Nodes orbit
-        nodes.forEach(n => {
+        // Halo group follows robot gently
+        haloGroup.position.y = 1.0 + Math.sin(t * 0.4) * 0.04;
+        haloGroup.rotation.y = Math.sin(t * 0.1) * 0.04;
+
+        // Data nodes orbit + bob
+        dataNodes.forEach(n => {
             n._ang += n._spd;
             n.position.x = Math.cos(n._ang) * n._rad;
             n.position.z = Math.sin(n._ang) * n._rad;
+            n.position.y = n._ht + Math.sin(t * n._bobSpd) * n._bobAmp;
+            // Spin each node
+            n.rotation.x = t * 1.2;
+            n.rotation.y = t * 0.8;
         });
 
-        // Red eyes — fast menacing pulse
-        const ep = 2.2 + Math.sin(t * 7) * 1.8;
-        eyeLtL.intensity = ep; eyeLtR.intensity = ep;
+        // Update neural connection lines between nearby nodes
+        let seg = 0;
+        for (let i = 0; i < dataNodes.length && seg < MAX_NODE_SEGS; i++) {
+            for (let j = i + 1; j < dataNodes.length && seg < MAX_NODE_SEGS; j++) {
+                const dx = dataNodes[i].position.x - dataNodes[j].position.x;
+                const dy = dataNodes[i].position.y - dataNodes[j].position.y;
+                const dz = dataNodes[i].position.z - dataNodes[j].position.z;
+                const dist = dx * dx + dy * dy + dz * dz;
+                if (dist < NODE_LINK_DIST * NODE_LINK_DIST) {
+                    const b = seg * 6;
+                    nodeLinePos[b]     = dataNodes[i].position.x;
+                    nodeLinePos[b + 1] = dataNodes[i].position.y;
+                    nodeLinePos[b + 2] = dataNodes[i].position.z;
+                    nodeLinePos[b + 3] = dataNodes[j].position.x;
+                    nodeLinePos[b + 4] = dataNodes[j].position.y;
+                    nodeLinePos[b + 5] = dataNodes[j].position.z;
+                    seg++;
+                }
+            }
+        }
+        nodeLineGeo.setDrawRange(0, seg * 2);
+        nodeLineGeo.attributes.position.needsUpdate = true;
+
+        // Visor eye pulse — smooth cyan glow
+        const ep = 2.8 + Math.sin(t * 3.5) * 1.5;
+        eyeLtL.intensity = ep;
+        eyeLtR.intensity = ep;
 
         // Core spin + pulse
-        core.rotation.y = t * 1.5;
-        core.rotation.x = t * 0.9;
-        coreLt.intensity = 3.0 + Math.sin(t * 3.5) * 2.0;
+        core.rotation.y = t * 1.8;
+        core.rotation.x = t * 1.1;
+        const coreP = 4.0 + Math.sin(t * 2.5) * 2.0;
+        coreLt.intensity = coreP;
 
-        // Red under flicker
-        redUnder.intensity = 4.5 + Math.sin(t * 9) * 0.6;
+        // Under-glow pulse
+        underLt.intensity = 3.0 + Math.sin(t * 1.5) * 0.8;
 
         renderer.render(scene, camera);
     }
     animate();
 
-    // Resize
+    // Resize handler
     window.addEventListener('resize', () => {
         const nw = window.innerWidth;
         const nh = window.innerHeight;
