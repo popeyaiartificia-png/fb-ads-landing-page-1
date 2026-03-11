@@ -412,9 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 (function initHeroRobotParallax() {
     const wrapper = document.getElementById('heroRobotWrapper');
-    const img = document.getElementById('heroRobotImg');
+    const robot = document.getElementById('eduRobot');
     const hero = document.getElementById('heroSection');
-    if (!wrapper || !img || !hero) return;
+    if (!wrapper || !robot || !hero) return;
 
     // Only enable on desktop
     if (window.innerWidth <= 768) return;
@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const translateX = currentX * 0.8;
         const translateY = currentY * 0.5;
 
-        img.style.transform = `
+        robot.style.transform = `
             perspective(1200px)
             rotateY(${currentX * 0.15}deg)
             rotateX(${currentY * 0.1}deg)
