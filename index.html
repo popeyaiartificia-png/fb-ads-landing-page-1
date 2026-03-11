@@ -72,12 +72,28 @@
     </header>
 
     <!-- ============================================================
-         HERO SECTION — Three.js AI Robot + Rotating Quotes
+         HERO SECTION — AI Robot Image with CSS 3D Effects
          ============================================================ -->
-    <section class="hero-section hero-full">
+    <section class="hero-section hero-full" id="heroSection">
 
-        <!-- Three.js AI Robot (fills entire hero) -->
-        <canvas id="heroCanvas3D" class="hero-robot-canvas"></canvas>
+        <!-- Animated Concentric Circles Background -->
+        <div class="hero-circles-bg">
+            <div class="circle-ring ring-1"></div>
+            <div class="circle-ring ring-2"></div>
+            <div class="circle-ring ring-3"></div>
+            <div class="circle-ring ring-4"></div>
+            <div class="circle-ring ring-5"></div>
+            <div class="circle-ring ring-6"></div>
+        </div>
+
+        <!-- AI Robot Image with 3D Parallax -->
+        <div class="hero-robot-img-wrapper" id="heroRobotWrapper">
+            <img src="hero-robot.png" alt="AI Robot - Artificia AI Masterclass" class="hero-robot-img" id="heroRobotImg">
+            <!-- Neon scan line effect -->
+            <div class="hero-scan-line"></div>
+            <!-- Neon glow overlay -->
+            <div class="hero-neon-glow"></div>
+        </div>
 
         <!-- Bottom gradient so text is readable -->
         <div class="hero-robot-gradient"></div>

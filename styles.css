@@ -291,13 +291,132 @@ h6 {
     justify-content: center;
 }
 
-.hero-robot-canvas {
+/* ─── AI Robot Image Hero — 3D CSS Effects ───────────── */
+.hero-circles-bg {
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    transform: translate(50%, -50%);
+    width: 900px;
+    height: 900px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.circle-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(174, 213, 52, 0.06);
+    transform: translate(-50%, -50%);
+    animation: circleExpand 8s ease-in-out infinite;
+}
+
+.ring-1 { width: 200px; height: 200px; animation-delay: 0s; border-color: rgba(174, 213, 52, 0.12); }
+.ring-2 { width: 350px; height: 350px; animation-delay: 0.5s; border-color: rgba(174, 213, 52, 0.09); }
+.ring-3 { width: 500px; height: 500px; animation-delay: 1s; border-color: rgba(174, 213, 52, 0.07); }
+.ring-4 { width: 650px; height: 650px; animation-delay: 1.5s; border-color: rgba(0, 229, 255, 0.05); }
+.ring-5 { width: 800px; height: 800px; animation-delay: 2s; border-color: rgba(0, 229, 255, 0.04); }
+.ring-6 { width: 950px; height: 950px; animation-delay: 2.5s; border-color: rgba(51, 0, 251, 0.03); }
+
+@keyframes circleExpand {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.5; }
+}
+
+/* ─── Robot Image Wrapper with 3D Parallax ──────────── */
+.hero-robot-img-wrapper {
+    position: absolute;
+    top: 0;
+    right: -5%;
+    width: 65%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    overflow: hidden;
+}
+
+.hero-robot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+    filter: brightness(1.05) contrast(1.1);
+    animation: robotFloat 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+@keyframes robotFloat {
+    0%, 100% { transform: translateY(0) rotateY(0deg); }
+    25% { transform: translateY(-8px) rotateY(0.5deg); }
+    50% { transform: translateY(-15px) rotateY(0deg); }
+    75% { transform: translateY(-8px) rotateY(-0.5deg); }
+}
+
+/* ─── Neon Scan Line Effect ─────────────────────────── */
+.hero-scan-line {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(174, 213, 52, 0.0) 20%,
+        rgba(174, 213, 52, 0.8) 50%,
+        rgba(174, 213, 52, 0.0) 80%,
+        transparent 100%
+    );
+    box-shadow: 0 0 15px rgba(174, 213, 52, 0.4), 0 0 30px rgba(174, 213, 52, 0.2);
+    animation: scanLine 4s ease-in-out infinite;
+    z-index: 2;
+    pointer-events: none;
+}
+
+@keyframes scanLine {
+    0% { top: 5%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 95%; opacity: 0; }
+}
+
+/* ─── Neon Glow Overlay ─────────────────────────────── */
+.hero-neon-glow {
     position: absolute;
     inset: 0;
-    width: 100% !important;
-    height: 100% !important;
     z-index: 1;
-    display: block;
+    pointer-events: none;
+    background: radial-gradient(
+        ellipse at 60% 40%,
+        rgba(174, 213, 52, 0.08) 0%,
+        rgba(0, 229, 255, 0.04) 30%,
+        transparent 70%
+    );
+    animation: neonPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* ─── Left-side dark fade for text readability ──────── */
+.hero-robot-img-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -5%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(to right, #000000 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    z-index: 3;
+    pointer-events: none;
 }
 
 .hero-robot-gradient {
@@ -436,6 +555,19 @@ h6 {
 @media (max-width: 768px) {
     .quote-rotator { min-height: 280px; }
     .hero-main-title { font-size: 1.75rem; }
+
+    .hero-robot-img-wrapper {
+        right: -15%;
+        width: 90%;
+        opacity: 0.35;
+    }
+
+    .hero-circles-bg {
+        right: 0;
+        transform: translate(50%, -50%) scale(0.5);
+    }
+
+    .hero-scan-line { display: none; }
 }
 
 /* ─────────────────────────────────────────────────────────── */
