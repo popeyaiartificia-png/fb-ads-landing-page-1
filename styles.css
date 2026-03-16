@@ -2620,6 +2620,109 @@ footer {
 }
 
 /* ==========================================================================
+   VIDEO SECTION
+   ========================================================================== */
+.video-section {
+    padding: 80px 0 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(174, 213, 52, 0.05) 50%, transparent 100%);
+}
+
+.video-section-header {
+    padding-bottom: 40px;
+}
+
+.video-fullwidth-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+/* top/bottom lime border accent */
+.video-fullwidth-wrapper::before,
+.video-fullwidth-wrapper::after {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #AED534, transparent);
+}
+
+.video-poster {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.video-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: brightness(0.5);
+    transition: filter 0.4s ease, transform 0.6s ease;
+}
+
+.video-poster:hover .video-poster-img {
+    filter: brightness(0.35);
+    transform: scale(1.03);
+}
+
+.video-poster-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-play-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.3s ease;
+}
+
+.video-poster:hover .video-play-btn {
+    transform: scale(1.1);
+}
+
+.video-play-btn i {
+    font-size: 100px;
+    color: #ff0000;
+    filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.7));
+}
+
+.video-play-btn span {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: rgba(0,0,0,0.6);
+    padding: 10px 28px;
+    border-radius: 30px;
+    border: 2px solid rgba(174, 213, 52, 0.6);
+}
+
+.video-mute-btn i {
+    font-size: 1rem;
+    color: #AED534;
+}
+
+@media (max-width: 768px) {
+    .video-mute-btn {
+        bottom: 12px;
+        right: 12px;
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
+}
+
+/* ==========================================================================
    TESTIMONIALS SECTION
    ========================================================================== */
 .testimonials-section {
@@ -2675,6 +2778,15 @@ footer {
     flex-shrink: 0;
 }
 
+.testimonial-photo {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--lime);
+}
+
 .testimonial-author div {
     display: flex;
     flex-direction: column;
@@ -2689,6 +2801,58 @@ footer {
 .testimonial-author span {
     color: var(--text-muted);
     font-size: 0.8rem;
+}
+
+/* Video Testimonials */
+.video-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.video-testimonial-card {
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #000;
+    overflow: hidden;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.video-testimonial-info {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.video-testimonial-info strong {
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.video-testimonial-info span {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .video-testimonials-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .social-proof-bar {

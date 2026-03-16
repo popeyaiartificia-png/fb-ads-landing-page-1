@@ -63,7 +63,7 @@
     <!-- Sticky Header -->
     <header class="glass-header">
         <div class="container header-container">
-            <img src="logo.png" alt="Artificia AI" class="logo">
+            <img src="images/logo.png" alt="Artificia AI" class="logo">
             <div class="header-right">
                 <span class="live-badge"><span class="dot blink"></span> LIVE IN VADODARA</span>
                 <a href="#booking" class="btn-outline-sm hide-mobile">Claim Your Seat</a>
@@ -89,7 +89,7 @@
         <!-- AI Robot Image with 3D Parallax -->
         <div class="hero-robot-img-wrapper" id="heroRobotWrapper">
             <!-- Single Photo Robot (Centered, no animation) -->
-            <img src="blue-robot.png" alt="Friendly AI Robot" class="photo-robot-img" id="eduRobot">
+            <img src="images/blue-robot.png" alt="Friendly AI Robot" class="photo-robot-img" id="eduRobot">
             <!-- Neon scan line effect -->
             <div class="hero-scan-line"></div>
             <!-- Neon glow overlay -->
@@ -495,7 +495,7 @@
             <div class="audience-cards">
                 <div class="audience-card reveal">
                     <div class="aud-img-wrapper">
-                        <img src="pro.png" alt="Professionals" class="aud-img">
+                        <img src="images/pro.png" alt="Professionals" class="aud-img">
                         <div class="aud-overlay"></div>
                     </div>
                     <div class="aud-content">
@@ -513,7 +513,7 @@
 
                 <div class="audience-card reveal" style="transition-delay: 0.1s;">
                     <div class="aud-img-wrapper">
-                        <img src="founder_marketer.png" alt="Founders" class="aud-img">
+                        <img src="images/founder_marketer.png" alt="Founders" class="aud-img">
                         <div class="aud-overlay"></div>
                     </div>
                     <div class="aud-content">
@@ -529,7 +529,7 @@
 
                 <div class="audience-card reveal" style="transition-delay: 0.2s;">
                     <div class="aud-img-wrapper">
-                        <img src="student.png" alt="Students" class="aud-img">
+                        <img src="images/student.png" alt="Students" class="aud-img">
                         <div class="aud-overlay"></div>
                     </div>
                     <div class="aud-content">
@@ -874,7 +874,7 @@
         <div class="container">
             <div class="founder-card reveal glass-card">
                 <div class="founder-img-wrapper">
-                    <img src="hardik.jpg.jpeg" alt="Hardik Aseri - AI Expert & Trainer" class="founder-img">
+                    <img src="images/hardik.jpg.jpeg" alt="Hardik Aseri - AI Expert & Trainer" class="founder-img">
                     <div class="founder-img-label">Hardik Aseri</div>
                 </div>
                 <div class="founder-content">
@@ -897,6 +897,27 @@
     </section>
 
     <!-- ============================================================
+         VIDEO SECTION
+         ============================================================ -->
+    <section class="video-section">
+        <div class="video-section-header container">
+            <h2 class="section-title text-center reveal">See <span class="gradient-text">Artificia in Action</span></h2>
+            <p class="text-center subtitle mb-5 reveal">Watch how we're transforming careers with practical AI skills in Vadodara.</p>
+        </div>
+        <div class="video-fullwidth-wrapper">
+            <a href="https://www.youtube.com/watch?v=6OyjJ219ig4" target="_blank" class="video-poster" id="videoPoster">
+                <img src="https://img.youtube.com/vi/6OyjJ219ig4/maxresdefault.jpg" alt="Artificia AI Masterclass Video" class="video-poster-img" onerror="this.src='https://img.youtube.com/vi/6OyjJ219ig4/hqdefault.jpg'">
+                <div class="video-poster-overlay">
+                    <div class="video-play-btn">
+                        <i class="fab fa-youtube"></i>
+                        <span>Watch on YouTube</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================================
          TESTIMONIALS SECTION
          ============================================================ -->
     <section class="testimonials-section">
@@ -904,59 +925,79 @@
             <h2 class="section-title text-center reveal">What Our <span class="gradient-text">Students Say</span></h2>
             <p class="text-center subtitle mb-5 reveal">Real results from real people in Vadodara — just like you.</p>
 
+            <!-- Video Testimonials -->
+            <div class="video-testimonials-grid reveal">
+                <div class="video-testimonial-card glass-card">
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" playsinline>
+                            <source src="videos/hatim.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-testimonial-info">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <strong>Hatim</strong>
+                        <span>Artificia AI Student</span>
+                    </div>
+                </div>
+                <div class="video-testimonial-card glass-card" style="transition-delay:0.1s;">
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" playsinline>
+                            <source src="videos/khushi.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-testimonial-info">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <strong>Khushi</strong>
+                        <span>Artificia AI Student</span>
+                    </div>
+                </div>
+                <div class="video-testimonial-card glass-card" style="transition-delay:0.2s;">
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" playsinline>
+                            <source src="videos/dev.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-testimonial-info">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <strong>Dev</strong>
+                        <span>Artificia AI Student</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="testimonials-grid">
-                <div class="testimonial-card reveal glass-card">
+                <div class="testimonial-card reveal glass-card" style="transition-delay: 0.4s;">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Before joining Artificia, I was spending 4 hours a day on repetitive
-                        marketing tasks. Now I've automated my entire content pipeline using n8n and AI. I've literally
-                        got my evenings back. Hardik explains everything in a way that actually makes sense."</p>
+                    <p class="testimonial-text">"Joining Artificia was an eye-opening experience. The AI training is highly practical and directly applicable to modern healthcare operations. It helped me understand how AI can improve nursing workflows, patient communication, and hospital administration. I strongly recommend Artificia to healthcare professionals who want to stay ahead in the future of healthcare."</p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">PS</div>
+                        <img src="images/testimonials/Alphonse Ns.jpg" alt="Alphonsa N. P" class="testimonial-photo">
                         <div>
-                            <strong>Priya Shah</strong>
-                            <span>Digital Marketer, Vadodara</span>
+                            <strong>Alphonsa N. P</strong>
+                            <span>Chief Nursing Administrator, Aadicura Super Speciality Hospital</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="testimonial-card reveal glass-card" style="transition-delay: 0.1s;">
+                <div class="testimonial-card reveal glass-card" style="transition-delay: 0.5s;">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"I was a fresh MBA graduate with no idea how to stand out. After the
-                        60-day program I built a complete AI portfolio — got my first freelancing client within 3 weeks
-                        of finishing. The investment paid back 5x already. Best decision of 2026."</p>
+                    <p class="testimonial-text">"Before joining Artificia, AI design felt overwhelming and complicated. The live sessions and practical projects helped me quickly build real creative skills. Today I feel confident using AI tools for design, branding, and freelance work."</p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">RM</div>
+                        <img src="images/testimonials/Haritha nair.jpg" alt="Haritha Nair" class="testimonial-photo">
                         <div>
-                            <strong>Rahul Mehta</strong>
-                            <span>MBA Graduate → AI Freelancer</span>
+                            <strong>Haritha Nair</strong>
+                            <span>AI Design Student, Vadodara</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="testimonial-card reveal glass-card" style="transition-delay: 0.2s;">
+                <div class="testimonial-card reveal glass-card" style="transition-delay: 0.6s;">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"As an HR manager I was skeptical — 'AI is for tech people.' Hardik
-                        proved me completely wrong. I now use AI to create job descriptions, screen resumes, and
-                        generate HR policies in minutes. My manager noticed the change. Got promoted last month."</p>
+                    <p class="testimonial-text">"Artificia helped me discover powerful AI tools that completely changed how I work. The training was practical, structured, and easy to apply in daily professional tasks. It has significantly improved my productivity and career growth."</p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">SP</div>
+                        <img src="images/testimonials/Nilesh Chudasma.jpg" alt="Nilesh Chaudasama" class="testimonial-photo">
                         <div>
-                            <strong>Sneha Patel</strong>
-                            <span>HR Manager, MNC Vadodara</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card reveal glass-card" style="transition-delay: 0.3s;">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"I run a small e-commerce business. After the program I replaced what
-                        used to need a team of 3 with AI workflows. Product descriptions, ad copy, customer replies —
-                        all automated. Revenue went up 40% because I finally had time to focus on growth."</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">AD</div>
-                        <div>
-                            <strong>Arjun Desai</strong>
-                            <span>E-commerce Founder, Vadodara</span>
+                            <strong>Nilesh Chaudasama</strong>
+                            <span>Working Professional, Vadodara</span>
                         </div>
                     </div>
                 </div>
@@ -1239,7 +1280,7 @@
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <img src="logo.png" alt="Artificia AI logo" style="height: 30px; margin-bottom: 20px; opacity: 0.5;">
+            <img src="images/logo.png" alt="Artificia AI logo" style="height: 30px; margin-bottom: 20px; opacity: 0.5;">
             <p>Empowering the Future with AI • Vadodara, Gujarat</p>
             <p class="copyright">&copy; 2026 Artificia AI. All Rights Reserved.</p>
             <div class="footer-links">

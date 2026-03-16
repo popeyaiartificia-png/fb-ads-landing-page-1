@@ -1,6 +1,33 @@
 // ==========================================
 // Artificia AI — Landing Page Interactions
 // ==========================================
+
+// ==========================================
+// YouTube Mute / Unmute Toggle
+// ==========================================
+let isMuted = true;
+
+function toggleMute() {
+    const iframe = document.getElementById('ytPlayer');
+    const icon = document.getElementById('muteIcon');
+    const label = document.getElementById('muteLabel');
+
+    if (!iframe) return;
+
+    if (isMuted) {
+        // Unmute: reload src without mute=1
+        iframe.src = iframe.src.replace('&mute=1', '&mute=0');
+        icon.className = 'fas fa-volume-high';
+        label.textContent = 'Mute';
+        isMuted = false;
+    } else {
+        // Mute: reload src with mute=1
+        iframe.src = iframe.src.replace('&mute=0', '&mute=1');
+        icon.className = 'fas fa-volume-xmark';
+        label.textContent = 'Unmute';
+        isMuted = true;
+    }
+}
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================
