@@ -340,10 +340,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = true;
 
                 const formData = {
-                    name:   document.getElementById('popupName').value.trim(),
-                    phone:  document.getElementById('popupPhone').value.trim(),
-                    email:  document.getElementById('popupEmail').value.trim(),
-                    source: 'popup-60s'
+                    name:         document.getElementById('popupName').value.trim(),
+                    phone:        document.getElementById('popupPhone').value.trim(),
+                    email:        document.getElementById('popupEmail').value.trim(),
+                    interest:     document.getElementById('popupInterest').value,
+                    submitted_at: new Date().toISOString(),
+                    source:       'popup-60s'
                 };
 
                 try {

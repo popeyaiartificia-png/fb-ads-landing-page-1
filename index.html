@@ -1306,6 +1306,68 @@
         </div>
     </div>
 
+    <!-- ============================================================
+         60-SECOND POP-UP FORM MODAL
+         ============================================================ -->
+    <div class="popup-overlay" id="popupOverlay" aria-modal="true" role="dialog" aria-labelledby="popupTitle">
+        <div class="popup-modal glass-card">
+            <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
+
+            <!-- Urgency header -->
+            <div class="popup-header">
+                <span class="popup-badge">⚡ ONLY 15 SEATS LEFT</span>
+                <h2 id="popupTitle">Wait — Before You Go!</h2>
+                <p>Secure your spot in Vadodara's #1 AI Masterclass. Free consultation on WhatsApp.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="popupLeadForm">
+                <div class="form-group">
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="popupName" required placeholder="Your Full Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-icon-wrapper">
+                        <i class="fab fa-whatsapp input-icon"></i>
+                        <input type="tel" id="popupPhone" required placeholder="WhatsApp Number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="popupEmail" required placeholder="Email Address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-briefcase input-icon"></i>
+                        <select id="popupInterest" required>
+                            <option value="" disabled selected>Your Current Designation</option>
+                            <option value="Student">Student</option>
+                            <option value="Working Professional">Working Professional</option>
+                            <option value="Business Owner">Business Owner</option>
+                            <option value="Freelancer">Freelancer</option>
+                            <option value="Job Seeker">Job Seeker</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-100 pulse-effect" id="popupSubmitBtn">
+                    CLAIM MY FREE SPOT <i class="fas fa-arrow-right"></i>
+                </button>
+                <p class="privacy-text"><i class="fas fa-lock"></i> 100% secure. No spam ever.</p>
+            </form>
+
+            <div id="popupSuccess" class="success-state hidden">
+                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                <h3>You're In!</h3>
+                <p>Our team will reach out on WhatsApp shortly.</p>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
