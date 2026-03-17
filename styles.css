@@ -8,8 +8,8 @@
     --text-muted: rgba(255, 255, 255, 0.55);
     --lime: #AED534;
     --lime-glow: rgba(174, 213, 52, 0.3);
-    --blue: #3300FB;
-    --blue-glow: rgba(51, 0, 251, 0.3);
+    --blue: #1a9e4a;
+    --blue-glow: rgba(26, 158, 74, 0.3);
     --border-subtle: rgba(255, 255, 255, 0.08);
     --glass-bg: rgba(0, 0, 0, 0.45);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -136,7 +136,7 @@ h6 {
 }
 
 .glow-secondary {
-    background: #4A00E0;
+    background: #1a9e4a;
     bottom: -200px;
     left: -200px;
 }

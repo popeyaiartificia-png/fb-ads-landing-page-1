@@ -415,9 +415,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const W = window.innerWidth;
     const H = window.innerHeight;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
     renderer.setSize(W, H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setPixelRatio(1);
     renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     camera.position.z = 700;
 
     // --- Particles ---
-    const N = 110;
+    const N = 60;
     const SPREAD_X = 900;
     const SPREAD_Y = 500;
     const pts = [];
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lineGeo.setAttribute('position', new THREE.BufferAttribute(linePos, 3).setUsage(THREE.DynamicDrawUsage));
     lineGeo.setDrawRange(0, 0);
 
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x3300FB, transparent: true, opacity: 0.18 });
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x1a9e4a, transparent: true, opacity: 0.18 });
     scene.add(new THREE.LineSegments(lineGeo, lineMat));
 
     // Mouse parallax
@@ -569,9 +569,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let W = parent.offsetWidth  || window.innerWidth;
     let H = parent.offsetHeight || window.innerHeight;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
     renderer.setSize(W, H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearColor(0x000000, 0);
 
     const scene  = new THREE.Scene();
