@@ -341,23 +341,45 @@ h6 {
     overflow: hidden;
 }
 
+/* ─── Legacy (kept for fallback) ─────────────────── */
 .photo-robot-img {
     width: auto;
-    height: 110%; /* Fills the height completely with some bleeding room for parallax */
+    height: 110%;
     max-width: none;
     object-fit: contain;
     object-position: center center;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)) brightness(0.9) contrast(1.1);
-    animation: robotFloat 6s ease-in-out infinite;
-    transform-style: preserve-3d;
     will-change: transform;
 }
 
-@keyframes robotFloat {
-    0%, 100% { transform: translateY(0) rotateY(0deg); }
-    25% { transform: translateY(-8px) rotateY(1.5deg); }
-    50% { transform: translateY(-15px) rotateY(0deg); }
-    75% { transform: translateY(-8px) rotateY(-1.5deg); }
+/* ─── Cover Hero Image (full-bleed Artificia cover) ── */
+.cover-hero-img {
+    width: 107%;          /* slightly oversize so parallax translate doesn't show edges */
+    height: 107%;
+    object-fit: cover;
+    object-position: center center;
+    filter: brightness(0.88) contrast(1.06) saturate(1.1);
+    will-change: transform;
+    transform-origin: center center;
+    /* subtle floating animation */
+    animation: coverFloat 8s ease-in-out infinite;
+}
+
+@keyframes coverFloat {
+    0%, 100% { transform: scale(1.07) translateY(0px); }
+    33%       { transform: scale(1.07) translateY(-6px); }
+    66%       { transform: scale(1.07) translateY(-3px); }
+}
+
+/* ─── Three.js 3D Canvas Overlay ─────────────────── */
+.hero-3d-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
 }
 
 /* ─── Neon Scan Line Effect ─────────────────────────── */

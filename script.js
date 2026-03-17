@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Form Data Prepared:", formData);
 
             try {
-                // POST to n8n webhook → Google Sheets
-                const WEBHOOK_URL = 'https://miniature-ugt6x.crab.containers.automata.host/webhook/d074af58-c29d-461b-89ea-dd527663b959';
+                // POST to n8n webhook → Artificia CRM Leads
+                const WEBHOOK_URL = 'https://miniature-ugt6x.crab.containers.automata.host/webhook/fb-leads-to-crm';
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -435,57 +435,217 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ==========================================
-// Hero Robot Image — Mouse-Reactive 3D Parallax
+// Cover Hero Image — Mouse-Reactive Parallax (subtle translate, no rotation)
 // ==========================================
 (function initHeroRobotParallax() {
-    const wrapper = document.getElementById('heroRobotWrapper');
     const robot = document.getElementById('eduRobot');
-    const hero = document.getElementById('heroSection');
-    if (!wrapper || !robot || !hero) return;
-
-    // Only enable on desktop
+    const hero  = document.getElementById('heroSection');
+    if (!robot || !hero) return;
     if (window.innerWidth <= 768) return;
 
     let mx = 0, my = 0;
-    let targetX = 0, targetY = 0;
-    let currentX = 0, currentY = 0;
+    let cx = 0, cy = 0;
 
     hero.addEventListener('mousemove', (e) => {
         const rect = hero.getBoundingClientRect();
-        mx = (e.clientX - rect.left) / rect.width - 0.5;   // -0.5 to 0.5
-        my = (e.clientY - rect.top) / rect.height - 0.5;
+        mx = (e.clientX - rect.left) / rect.width  - 0.5;
+        my = (e.clientY - rect.top)  / rect.height - 0.5;
     }, { passive: true });
 
-    hero.addEventListener('mouseleave', () => {
-        mx = 0;
-        my = 0;
-    });
+    hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
 
     function animate() {
         requestAnimationFrame(animate);
+        cx += (mx * 14 - cx) * 0.05;
+        cy += (my * 8  - cy) * 0.05;
+        // Translate only — keeps edges hidden since image is 107% sized
+        robot.style.transform = `scale(1.07) translateX(${cx}px) translateY(${cy}px)`;
+    }
+    animate();
+})();
 
-        // Smooth lerp towards target
-        targetX = mx * 12;   // Max rotation in degrees
-        targetY = my * -8;
+// ==========================================
+// Hero 3D Canvas — Three.js Particles + Diamonds + HUD Rings
+// ==========================================
+(function initHero3DCanvas() {
+    const canvas = document.getElementById('heroCanvas3D');
+    if (!canvas || typeof THREE === 'undefined') return;
 
-        currentX += (targetX - currentX) * 0.06;
-        currentY += (targetY - currentY) * 0.06;
+    const parent = canvas.parentElement;
+    let W = parent.offsetWidth  || window.innerWidth;
+    let H = parent.offsetHeight || window.innerHeight;
 
-        // Apply 3D transform — slight rotation + translate for depth
-        const translateX = currentX * 0.8;
-        const translateY = currentY * 0.5;
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
 
-        robot.style.transform = `
-            perspective(1200px)
-            rotateY(${currentX * 0.15}deg)
-            rotateX(${currentY * 0.1}deg)
-            translateX(${translateX}px)
-            translateY(${translateY}px)
-            scale(1.02)
-        `;
+    const scene  = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 2000);
+    camera.position.z = 600;
+
+    // --- Parallax groups (different depths) ---
+    const layerFar  = new THREE.Group(); // slow
+    const layerMid  = new THREE.Group(); // medium
+    const layerNear = new THREE.Group(); // fast
+    scene.add(layerFar, layerMid, layerNear);
+
+    // === 1. DOT CLOUD — matches the lime green dot-matrix humanoid on right side ===
+    const DOT_COUNT = 480;
+    const dotPos = new Float32Array(DOT_COUNT * 3);
+    for (let i = 0; i < DOT_COUNT; i++) {
+        // Bias dots toward right half, varying depths
+        dotPos[i*3]     = 120 + (Math.random() - 0.3) * 340;
+        dotPos[i*3 + 1] = (Math.random() - 0.5) * 450;
+        dotPos[i*3 + 2] = (Math.random() - 0.5) * 180;
+    }
+    const dotGeo = new THREE.BufferGeometry();
+    dotGeo.setAttribute('position', new THREE.BufferAttribute(dotPos, 3));
+    const dotMat = new THREE.PointsMaterial({
+        color: 0xAED534,
+        size: 2.8,
+        transparent: true,
+        opacity: 0.55,
+        sizeAttenuation: true,
+    });
+    const dotCloud = new THREE.Points(dotGeo, dotMat);
+    layerFar.add(dotCloud);
+
+    // === 2. DIAMOND WIREFRAMES — match the decorative diamonds in the cover image ===
+    function makeDiamond(scale, x, y, z, speed) {
+        const geo = new THREE.OctahedronGeometry(scale, 0);
+        const mat = new THREE.MeshBasicMaterial({
+            color: 0xAED534,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.45,
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.scale.set(1, 1.55, 0.25);
+        mesh.position.set(x, y, z);
+        mesh.userData.speed = speed;
+        return mesh;
     }
 
+    const diamonds = [
+        makeDiamond(32, 200, -175, 30,  0.006),
+        makeDiamond(22, -290,  95, -40, -0.004),
+        makeDiamond(18,  360,  70,  55,  0.005),
+        makeDiamond(14, -160, -220, 10,  0.007),
+    ];
+    diamonds.forEach(d => layerMid.add(d));
+
+    // === 3. HUD RINGS — glowing circle around the robot head area (left side) ===
+    function makeRing(r, opacity) {
+        const geo = new THREE.RingGeometry(r, r + 1.8, 72);
+        const mat = new THREE.MeshBasicMaterial({
+            color: 0xAED534,
+            transparent: true,
+            opacity,
+            side: THREE.DoubleSide,
+        });
+        return new THREE.Mesh(geo, mat);
+    }
+
+    const hudGroup = new THREE.Group();
+    hudGroup.position.set(-210, 60, 20);
+    const rings = [
+        makeRing(68,  0.30),
+        makeRing(100, 0.15),
+        makeRing(135, 0.07),
+    ];
+    rings.forEach(r => hudGroup.add(r));
+    layerNear.add(hudGroup);
+
+    // === 4. CIRCUIT LINES — top-left corner tech lines ===
+    function makeCircuit(points, opacity) {
+        const vecs = points.map(([x, y]) => new THREE.Vector3(x, y, 5));
+        const geo  = new THREE.BufferGeometry().setFromPoints(vecs);
+        const mat  = new THREE.LineBasicMaterial({ color: 0xAED534, transparent: true, opacity });
+        return new THREE.Line(geo, mat);
+    }
+
+    layerMid.add(
+        makeCircuit([[-380,210],[-300,210],[-300,170],[-230,170]], 0.45),
+        makeCircuit([[-380,180],[-340,180],[-340,140]], 0.30),
+        makeCircuit([[380,210],[320,210],[320,170],[260,170]], 0.35),
+    );
+
+    // Circuit junction nodes
+    [[-380,210],[-300,210],[-300,170],[-230,170],[-380,180],[-340,180],[-340,140],[380,210],[320,210],[260,170]].forEach(([x, y]) => {
+        const geo  = new THREE.SphereGeometry(3.5, 8, 8);
+        const mat  = new THREE.MeshBasicMaterial({ color: 0xAED534, transparent: true, opacity: 0.8 });
+        const node = new THREE.Mesh(geo, mat);
+        node.position.set(x, y, 5);
+        layerMid.add(node);
+    });
+
+    // === 5. EXTRA FLOATING PARTICLES (scattered depth layer) ===
+    const SCATTER = 120;
+    const scatterPos = new Float32Array(SCATTER * 3);
+    for (let i = 0; i < SCATTER; i++) {
+        scatterPos[i*3]     = (Math.random() - 0.5) * 900;
+        scatterPos[i*3 + 1] = (Math.random() - 0.5) * 600;
+        scatterPos[i*3 + 2] = (Math.random() - 0.5) * 300;
+    }
+    const scatterGeo = new THREE.BufferGeometry();
+    scatterGeo.setAttribute('position', new THREE.BufferAttribute(scatterPos, 3));
+    const scatterMat = new THREE.PointsMaterial({
+        color: 0xAED534,
+        size: 1.5,
+        transparent: true,
+        opacity: 0.3,
+        sizeAttenuation: true,
+    });
+    layerFar.add(new THREE.Points(scatterGeo, scatterMat));
+
+    // Mouse tracking
+    let mx = 0, my = 0;
+    const heroEl = document.getElementById('heroSection');
+    if (heroEl) {
+        heroEl.addEventListener('mousemove', e => {
+            const r = heroEl.getBoundingClientRect();
+            mx = (e.clientX - r.left) / r.width  - 0.5;
+            my = (e.clientY - r.top)  / r.height - 0.5;
+        }, { passive: true });
+        heroEl.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+    }
+
+    let t = 0;
+    function animate() {
+        requestAnimationFrame(animate);
+        t += 0.012;
+
+        // Rotate diamonds
+        diamonds.forEach(d => { d.rotation.z += d.userData.speed; });
+
+        // Breathe HUD rings
+        rings[0].material.opacity = 0.22 + Math.sin(t * 1.6) * 0.10;
+        rings[1].material.opacity = 0.10 + Math.sin(t * 1.2 + 0.7) * 0.05;
+        rings[2].material.opacity = 0.04 + Math.sin(t * 0.9 + 1.4) * 0.03;
+
+        // Pulse dot cloud
+        dotMat.opacity = 0.40 + Math.sin(t * 0.7) * 0.18;
+
+        // Mouse parallax on layers
+        layerFar.position.x  += (mx * 18  - layerFar.position.x)  * 0.04;
+        layerFar.position.y  += (-my * 12 - layerFar.position.y)  * 0.04;
+        layerMid.position.x  += (mx * 35  - layerMid.position.x)  * 0.05;
+        layerMid.position.y  += (-my * 22 - layerMid.position.y)  * 0.05;
+        layerNear.position.x += (mx * 55  - layerNear.position.x) * 0.06;
+        layerNear.position.y += (-my * 38 - layerNear.position.y) * 0.06;
+
+        renderer.render(scene, camera);
+    }
     animate();
+
+    window.addEventListener('resize', () => {
+        W = parent.offsetWidth  || window.innerWidth;
+        H = parent.offsetHeight || window.innerHeight;
+        camera.aspect = W / H;
+        camera.updateProjectionMatrix();
+        renderer.setSize(W, H);
+    });
 })();
 
 // ==========================================
