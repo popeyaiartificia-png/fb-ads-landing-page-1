@@ -288,10 +288,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const WEBHOOK_URL = 'https://miniature-ugt6x.crab.containers.automata.host/webhook/fb-leads-to-crm';
 
         function showPopup() {
+            overlay.setAttribute('style',
+                'display:flex; position:fixed; top:0; left:0; right:0; bottom:0;' +
+                'z-index:99999; background:rgba(0,0,0,0.85);' +
+                'align-items:center; justify-content:center; padding:20px;'
+            );
+            const modal = overlay.querySelector('.popup-modal');
+            if (modal) {
+                modal.setAttribute('style',
+                    'background:#111; border:2px solid #AED534; border-radius:16px;' +
+                    'padding:40px 36px 32px; width:100%; max-width:480px;' +
+                    'position:relative; color:#fff; max-height:90vh; overflow-y:auto;'
+                );
+            }
             overlay.classList.add('active');
         }
 
         function hidePopup() {
+            overlay.style.display = 'none';
             overlay.classList.remove('active');
             sessionStorage.setItem('popupDismissed', '1');
         }
