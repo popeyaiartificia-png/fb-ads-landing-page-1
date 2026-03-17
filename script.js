@@ -274,6 +274,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (heroSection) stickyObserver.observe(heroSection);
     }
+
+    // ==========================================
+    // Popup Lead Form — appears after 60 seconds
+    // ==========================================
+    (function initPopup() {
+        const overlay = document.getElementById('popupOverlay');
+        if (!overlay) return;
+
+        // Don't show again if already dismissed or submitted this session
+        if (sessionStorage.getItem('popupDismissed')) return;
+
+        const WEBHOOK_URL = 'https://miniature-ugt6x.crab.containers.automata.host/webhook/fb-leads-to-crm';
+
+        function showPopup() {
+            overlay.classList.add('active');
+        }
+
+        function hidePopup() {
+            overlay.classList.remove('active');
+            sessionStorage.setItem('popupDismissed', '1');
+        }
+
+        // Trigger after exactly 60 seconds
+        setTimeout(showPopup, 60000);
+
+        // Close button
+        const closeBtn = document.getElementById('popupClose');
+        if (closeBtn) closeBtn.addEventListener('click', hidePopup);
+
+        // Click outside modal to close
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) hidePopup();
+        });
+
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) hidePopup();
+        });
+
+        // Form submission
+        const popupForm = document.getElementById('popupLeadForm');
+        if (popupForm) {
+            popupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const submitBtn = document.getElementById('popupSubmitBtn');
+                const originalText = submitBtn.innerHTML;
+
+                submitBtn.innerHTML = 'SENDING... <i class="fas fa-spinner fa-spin"></i>';
+                submitBtn.disabled = true;
+
+                const formData = {
+                    name:   document.getElementById('popupName').value.trim(),
+                    phone:  document.getElementById('popupPhone').value.trim(),
+                    email:  document.getElementById('popupEmail').value.trim(),
+                    source: 'popup-60s'
+                };
+
+                try {
+                    await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    popupForm.classList.add('hidden');
+                    document.getElementById('popupSuccess').classList.remove('hidden');
+                    sessionStorage.setItem('popupDismissed', '1');
+
+                } catch (err) {
+                    console.error('Popup submission error:', err);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    alert('Could not submit. Please try again or message us on WhatsApp.');
+                }
+            });
+        }
+    })();
 });
 
 // ==========================================
