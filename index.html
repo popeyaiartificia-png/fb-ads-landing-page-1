@@ -9,6 +9,99 @@
     <meta name="description"
         content="Master Generative AI, Automation & Agents in Vadodara's Premium Offline Program. Elevate your career and productivity.">
 
+    <!-- Open Graph (Facebook / WhatsApp / LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Unlock Your AI Potential | Artificia AI Masterclass">
+    <meta property="og:description" content="Master Generative AI, Automation & AI Agents in Vadodara's most practical offline program. Join 100+ professionals already ahead.">
+    <meta property="og:image" content="https://artificiaai.com/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://artificiaai.com">
+    <meta property="og:site_name" content="Artificia AI">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Unlock Your AI Potential | Artificia AI Masterclass">
+    <meta name="twitter:description" content="Master Generative AI, Automation & AI Agents in Vadodara's most practical offline program.">
+    <meta name="twitter:image" content="https://artificiaai.com/og-cover.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+
+    <!-- ============================================================
+         TRACKING — Replace YOUR_PIXEL_ID and YOUR_GA4_ID with real values
+         ============================================================ -->
+    <!-- Meta (Facebook) Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID'); // TODO: Replace YOUR_PIXEL_ID
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" alt=""></noscript>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR_GA4_ID'); // TODO: Replace YOUR_GA4_ID
+    </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Course",
+                "name": "Artificia AI Masterclass — Generative AI, Automation & Agents",
+                "description": "Master Generative AI, Automation & Agents in Vadodara's Premium Offline Program. 12-week hands-on training covering ChatGPT, prompt engineering, n8n automation, AI agents, and real-world projects.",
+                "provider": {
+                    "@type": "Organization",
+                    "name": "Artificia AI",
+                    "url": "https://artificiaai.com"
+                },
+                "courseMode": "Blended",
+                "educationalLevel": "Beginner to Advanced",
+                "inLanguage": "en",
+                "teaches": ["Generative AI", "Prompt Engineering", "n8n Automation", "AI Agents", "ChatGPT", "Midjourney"],
+                "timeRequired": "P12W",
+                "offers": {
+                    "@type": "Offer",
+                    "category": "AI Training",
+                    "availability": "https://schema.org/LimitedAvailability"
+                }
+            },
+            {
+                "@type": "LocalBusiness",
+                "name": "Artificia AI",
+                "description": "Vadodara's leading AI training institute offering practical, hands-on programs in Generative AI and automation.",
+                "url": "https://artificiaai.com",
+                "logo": "https://artificiaai.com/images/logo.png",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Vadodara",
+                    "addressRegion": "Gujarat",
+                    "addressCountry": "IN"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 22.3072,
+                    "longitude": 73.1812
+                },
+                "sameAs": ["https://www.linkedin.com/in/hardik-aseri/"]
+            }
+        ]
+    }
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,14 +113,12 @@
 
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 </head>
 
 <body>
 
     <!-- Neural Network Canvas (global 3D background) -->
-    <canvas id="neuralCanvas"></canvas>
+    <canvas id="neuralCanvas" aria-hidden="true"></canvas>
 
     <!-- ============================================================
          TOP ANNOUNCEMENT MARQUEE
@@ -65,8 +156,19 @@
                 <span class="live-badge"><span class="dot blink"></span> LIVE IN VADODARA</span>
                 <a href="#corporate" class="btn-outline-sm hide-mobile" style="margin-right:8px;">Team Training</a>
                 <a href="#booking" class="btn-outline-sm hide-mobile">Claim Your Seat</a>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
+        <!-- Mobile nav drawer -->
+        <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+            <a href="#why-ai" class="mobile-nav-link" onclick="closeMobileNav()">Why AI</a>
+            <a href="#results" class="mobile-nav-link" onclick="closeMobileNav()">Results</a>
+            <a href="#program" class="mobile-nav-link" onclick="closeMobileNav()">Program</a>
+            <a href="#corporate" class="mobile-nav-link" onclick="closeMobileNav()">Team Training</a>
+            <a href="#booking" class="mobile-nav-link mobile-nav-cta" onclick="closeMobileNav()">Claim Your Seat</a>
+        </nav>
     </header>
 
     <!-- ============================================================
@@ -89,7 +191,7 @@
             <!-- Artificia Cover Image (full-bleed) -->
             <img src="images/cover-hero.jpg" alt="Artificia AI — AI Talent, Trained and Delivered" class="cover-hero-img" id="eduRobot">
             <!-- Three.js 3D interactive canvas overlay -->
-            <canvas id="heroCanvas3D" class="hero-3d-canvas"></canvas>
+            <canvas id="heroCanvas3D" class="hero-3d-canvas" aria-hidden="true"></canvas>
             <!-- Neon scan line effect -->
             <div class="hero-scan-line"></div>
             <!-- Neon glow overlay -->
@@ -468,7 +570,7 @@
             <div class="audience-cards">
                 <div class="audience-card reveal">
                     <div class="aud-img-wrapper">
-                        <img src="images/pro.png" alt="Professionals" class="aud-img">
+                        <img src="images/pro.png" alt="Professionals" class="aud-img" loading="lazy">
                         <div class="aud-overlay"></div>
                     </div>
                     <div class="aud-content">
@@ -486,7 +588,7 @@
 
                 <div class="audience-card reveal" style="transition-delay: 0.1s;">
                     <div class="aud-img-wrapper">
-                        <img src="images/founder_marketer.png" alt="Founders" class="aud-img">
+                        <img src="images/founder_marketer.png" alt="Founders" class="aud-img" loading="lazy">
                         <div class="aud-overlay"></div>
                     </div>
                     <div class="aud-content">
@@ -502,7 +604,7 @@
 
                 <div class="audience-card reveal" style="transition-delay: 0.2s;">
                     <div class="aud-img-wrapper">
-                        <img src="images/student.png" alt="Students" class="aud-img">
+                        <img src="images/student.png" alt="Students" class="aud-img" loading="lazy">
                         <div class="aud-overlay"></div>
                     </div>
                     <div class="aud-content">
@@ -535,7 +637,7 @@
             <div class="expand-gallery" id="expandGallery">
                 <div class="expand-panel active" data-index="0">
                     <img src="images/phase-1.jpg" alt="AI Fundamentals"
-                        class="expand-img">
+                        class="expand-img" loading="lazy">
                     <div class="expand-overlay"></div>
                     <div class="expand-label">
                         <span class="expand-phase-badge">PHASE 1</span>
@@ -555,7 +657,7 @@
                 </div>
 
                 <div class="expand-panel" data-index="1">
-                    <img src="images/phase-2.jpg" alt="Prompt Engineering" class="expand-img">
+                    <img src="images/phase-2.jpg" alt="Prompt Engineering" class="expand-img" loading="lazy">
                     <div class="expand-overlay"></div>
                     <div class="expand-label">
                         <span class="expand-phase-badge">PHASE 2</span>
@@ -576,7 +678,7 @@
                 </div>
 
                 <div class="expand-panel" data-index="2">
-                    <img src="images/phase-3.jpg" alt="Visual & Media AI" class="expand-img">
+                    <img src="images/phase-3.jpg" alt="Visual & Media AI" class="expand-img" loading="lazy">
                     <div class="expand-overlay"></div>
                     <div class="expand-label">
                         <span class="expand-phase-badge">PHASE 3</span>
@@ -596,7 +698,7 @@
                 </div>
 
                 <div class="expand-panel" data-index="3">
-                    <img src="images/phase-4.jpg" alt="n8n Basics" class="expand-img">
+                    <img src="images/phase-4.jpg" alt="n8n Basics" class="expand-img" loading="lazy">
                     <div class="expand-overlay"></div>
                     <div class="expand-label">
                         <span class="expand-phase-badge">PHASE 4</span>
@@ -618,7 +720,7 @@
                 </div>
 
                 <div class="expand-panel" data-index="4">
-                    <img src="images/phase-5.jpg" alt="Advanced AI + n8n" class="expand-img">
+                    <img src="images/phase-5.jpg" alt="Advanced AI + n8n" class="expand-img" loading="lazy">
                     <div class="expand-overlay"></div>
                     <div class="expand-label">
                         <span class="expand-phase-badge">PHASE 5</span>
@@ -639,7 +741,7 @@
                 </div>
 
                 <div class="expand-panel" data-index="5">
-                    <img src="images/phase-6.jpg" alt="Real-World Projects" class="expand-img">
+                    <img src="images/phase-6.jpg" alt="Real-World Projects" class="expand-img" loading="lazy">
                     <div class="expand-overlay"></div>
                     <div class="expand-label">
                         <span class="expand-phase-badge">PHASE 6</span>
@@ -842,7 +944,7 @@
         <div class="container">
             <div class="founder-card reveal glass-card">
                 <div class="founder-img-wrapper">
-                    <img src="images/hardik.jpg.jpeg" alt="Hardik Aseri - AI Expert & Trainer" class="founder-img">
+                    <img src="images/hardik.jpg.jpeg" alt="Hardik Aseri - AI Expert & Trainer" class="founder-img" loading="lazy">
                     <div class="founder-img-label">Hardik Aseri</div>
                 </div>
                 <div class="founder-content">
@@ -880,7 +982,7 @@
             <div class="upskill-split reveal">
                 <div class="upskill-img-col">
                     <div class="upskill-img-wrapper">
-                        <img src="images/team-teaching.jpg" alt="AI Corporate Training — Artificia" class="upskill-main-img">
+                        <img src="images/team-teaching.jpg" alt="AI Corporate Training — Artificia" class="upskill-main-img" loading="lazy">
                         <div class="upskill-img-badge">
                             <i class="fas fa-building"></i>
                             <span>Corporate AI Training</span>
@@ -961,19 +1063,19 @@
             <h2 class="section-title text-center reveal">Brands We've <span class="gradient-text">Worked With</span></h2>
             <p class="text-center subtitle mb-5 reveal">Trusted by forward-thinking organizations across industries.</p>
             <div class="brands-grid reveal">
-                <div class="brand-item"><img src="images/brands/1.png" alt="Brand 1"></div>
-                <div class="brand-item"><img src="images/brands/2.png" alt="Brand 2"></div>
-                <div class="brand-item"><img src="images/brands/3.png" alt="Brand 3"></div>
-                <div class="brand-item"><img src="images/brands/4.png" alt="Brand 4"></div>
-                <div class="brand-item"><img src="images/brands/5.png" alt="Brand 5"></div>
-                <div class="brand-item"><img src="images/brands/6.png" alt="Brand 6"></div>
-                <div class="brand-item"><img src="images/brands/7.png" alt="Brand 7"></div>
-                <div class="brand-item"><img src="images/brands/8.png" alt="Brand 8"></div>
-                <div class="brand-item"><img src="images/brands/9.png" alt="Brand 9"></div>
-                <div class="brand-item"><img src="images/brands/10.png" alt="Brand 10"></div>
-                <div class="brand-item"><img src="images/brands/11.png" alt="Brand 11"></div>
-                <div class="brand-item"><img src="images/brands/12.png" alt="Brand 12"></div>
-                <div class="brand-item"><img src="images/brands/13.png" alt="Brand 13"></div>
+                <div class="brand-item"><img src="images/brands/1.png" alt="Brand 1" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/2.png" alt="Brand 2" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/3.png" alt="Brand 3" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/4.png" alt="Brand 4" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/5.png" alt="Brand 5" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/6.png" alt="Brand 6" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/7.png" alt="Brand 7" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/8.png" alt="Brand 8" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/9.png" alt="Brand 9" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/10.png" alt="Brand 10" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/11.png" alt="Brand 11" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/12.png" alt="Brand 12" loading="lazy"></div>
+                <div class="brand-item"><img src="images/brands/13.png" alt="Brand 13" loading="lazy"></div>
             </div>
         </div>
     </section>
@@ -1042,7 +1144,7 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card reveal glass-card" style="transition-delay: 0.4s;">
                     <div class="testimonial-photo-wrapper">
-                        <img src="images/testimonials/Alphonse Ns.jpg" alt="Alphonsa N. P" class="testimonial-photo">
+                        <img src="images/testimonials/Alphonse Ns.jpg" alt="Alphonsa N. P" class="testimonial-photo" loading="lazy">
                     </div>
                     <div class="testimonial-content">
                         <div class="testimonial-stars">★★★★★</div>
@@ -1056,7 +1158,7 @@
 
                 <div class="testimonial-card reveal glass-card" style="transition-delay: 0.5s;">
                     <div class="testimonial-photo-wrapper">
-                        <img src="images/testimonials/Haritha nair.jpg" alt="Haritha Nair" class="testimonial-photo">
+                        <img src="images/testimonials/Haritha nair.jpg" alt="Haritha Nair" class="testimonial-photo" loading="lazy">
                     </div>
                     <div class="testimonial-content">
                         <div class="testimonial-stars">★★★★★</div>
@@ -1070,7 +1172,7 @@
 
                 <div class="testimonial-card reveal glass-card" style="transition-delay: 0.6s;">
                     <div class="testimonial-photo-wrapper">
-                        <img src="images/testimonials/Nilesh Chudasma.jpg" alt="Nilesh Chaudasama" class="testimonial-photo">
+                        <img src="images/testimonials/Nilesh Chudasma.jpg" alt="Nilesh Chaudasama" class="testimonial-photo" loading="lazy">
                     </div>
                     <div class="testimonial-content">
                         <div class="testimonial-stars">★★★★★</div>
@@ -1360,13 +1462,13 @@
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <img src="images/logo.png" alt="Artificia AI logo" style="height: 30px; margin-bottom: 20px; opacity: 0.5;">
+            <img src="images/logo.png" alt="Artificia AI logo" style="height: 30px; margin-bottom: 20px; opacity: 0.5;" loading="lazy">
             <p>Empowering the Future with AI • Vadodara, Gujarat</p>
             <p class="copyright">&copy; 2026 Artificia AI. All Rights Reserved.</p>
             <div class="footer-links">
                 <a href="https://artificiaai.com">Main Website</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms & Conditions</a>
+                <a href="https://artificiaai.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+                <a href="https://artificiaai.com/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a>
             </div>
         </div>
     </footer>
@@ -1394,7 +1496,7 @@
     <!-- ============================================================
          60-SECOND POP-UP FORM MODAL
          ============================================================ -->
-    <div class="popup-overlay" id="popupOverlay" aria-modal="true" role="dialog" aria-labelledby="popupTitle">
+    <div class="popup-overlay" id="popupOverlay" aria-modal="true" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
         <div class="popup-modal glass-card">
             <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
 
@@ -1453,7 +1555,30 @@
         </div>
     </div>
 
+    <!-- Three.js — deferred to bottom so it doesn't block first paint -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Hamburger mobile nav
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        function closeMobileNav() {
+            mobileNav.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            mobileNav.setAttribute('aria-hidden', 'true');
+        }
+        hamburgerBtn.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.toggle('open');
+            hamburgerBtn.classList.toggle('active', isOpen);
+            hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+            mobileNav.setAttribute('aria-hidden', String(!isOpen));
+        });
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.glass-header')) closeMobileNav();
+        });
+    </script>
 </body>
 
 </html>

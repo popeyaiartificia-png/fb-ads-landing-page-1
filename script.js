@@ -302,11 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
             }
             overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
         }
 
         function hidePopup() {
             overlay.style.display = 'none';
             overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
             sessionStorage.setItem('popupDismissed', '1');
         }
 
