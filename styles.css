@@ -2806,6 +2806,72 @@ footer {
 }
 
 /* ==========================================================================
+   BRANDS / CLIENTS SECTION
+   ========================================================================== */
+.brands-section {
+    padding: 80px 0;
+    background: transparent;
+}
+
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 24px;
+    align-items: center;
+    justify-items: center;
+    margin-top: 48px;
+}
+
+.brand-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.brand-item:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(74,222,128,0.3);
+    transform: translateY(-3px);
+}
+
+.brand-item img {
+    max-height: 56px;
+    max-width: 120px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+    transition: opacity 0.25s, filter 0.25s;
+}
+
+.brand-item:hover img {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(74,222,128,0.5));
+}
+
+@media (max-width: 768px) {
+    .brands-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+    .brand-item img {
+        max-height: 44px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brands-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================================================
    TESTIMONIALS SECTION
    ========================================================================== */
 .testimonials-section {
