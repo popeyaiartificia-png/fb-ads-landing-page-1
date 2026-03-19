@@ -981,7 +981,7 @@ h6 {
    Story / Problem Section
    ========================================================================== */
 .story-section {
-    padding: 80px 0;
+    padding: 50px 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 
@@ -1040,7 +1040,7 @@ h6 {
    Audience Cards
    ========================================================================== */
 .audience-section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .audience-cards {
@@ -1122,7 +1122,7 @@ h6 {
    HOVER-EXPAND GALLERY — Course Phase Showcase
    ========================================================================== */
 .expand-section {
-    padding: 100px 0;
+    padding: 50px 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
@@ -1297,7 +1297,7 @@ h6 {
    CURRICULUM ACCORDION — Detailed 12-Week Breakdown
    ========================================================================== */
 .curriculum-section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .curriculum-accordion {
@@ -1492,7 +1492,7 @@ h6 {
    Indian Leaders AI Quotes
    ========================================================================== */
 .leaders-section {
-    padding: 60px 0;
+    padding: 40px 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
 }
 
@@ -1631,7 +1631,7 @@ h6 {
    Comparison Table — Why We're Different
    ========================================================================== */
 .comparison-section {
-    padding: 100px 0;
+    padding: 50px 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
@@ -1717,7 +1717,7 @@ h6 {
    Results Section — What You'll Be Able To Do
    ========================================================================== */
 .results-section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .results-grid {
@@ -1765,7 +1765,7 @@ h6 {
    Career Outcomes Section
    ========================================================================== */
 .outcomes-section {
-    padding: 80px 0 100px;
+    padding: 50px 0 60px;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);
 }
 
@@ -1850,7 +1850,7 @@ h6 {
    Tools Ticker Section
    ========================================================================== */
 .tools-section {
-    padding: 80px 0;
+    padding: 50px 0;
     background: #0B0C10;
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
@@ -1925,7 +1925,7 @@ h6 {
    Value Summary Section (Replaces Pricing)
    ========================================================================== */
 .value-summary-section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .value-grid {
@@ -1975,7 +1975,7 @@ h6 {
    Founder Trust Section
    ========================================================================== */
 .founder-section {
-    padding: 80px 0;
+    padding: 50px 0;
 }
 
 .founder-card {
@@ -2048,7 +2048,7 @@ h6 {
    Booking Form
    ========================================================================== */
 .booking-section {
-    padding: 80px 0 100px;
+    padding: 50px 0 60px;
     position: relative;
 }
 
@@ -2446,7 +2446,7 @@ footer {
    PRICING SECTION
    ========================================================================== */
 .pricing-section {
-    padding: 100px 0;
+    padding: 50px 0;
     background: linear-gradient(180deg, rgba(212,255,0,0.03) 0%, transparent 100%);
 }
 
@@ -2657,7 +2657,7 @@ footer {
    VIDEO SECTION
    ========================================================================== */
 .video-section {
-    padding: 80px 0 0;
+    padding: 40px 0 0;
     background: linear-gradient(180deg, transparent 0%, rgba(174, 213, 52, 0.05) 50%, transparent 100%);
 }
 
@@ -2809,7 +2809,7 @@ footer {
    BRANDS / CLIENTS SECTION
    ========================================================================== */
 .brands-section {
-    padding: 80px 0;
+    padding: 50px 0;
     background: transparent;
 }
 
@@ -2875,7 +2875,7 @@ footer {
    TESTIMONIALS SECTION
    ========================================================================== */
 .testimonials-section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .testimonials-grid {
@@ -3059,7 +3059,7 @@ footer {
    FAQ SECTION
    ========================================================================== */
 .faq-section {
-    padding: 100px 0;
+    padding: 50px 0;
     background: linear-gradient(180deg, transparent, rgba(212,255,0,0.02) 50%, transparent);
 }
 
@@ -3529,7 +3529,7 @@ body > div:not(#neuralCanvas):not(.top-marquee-bar):not(.glass-header):not(.ambi
    ============================================================ */
 
 .upskill-section {
-    padding: 100px 0;
+    padding: 50px 0;
     background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(16,24,6,0.6) 50%, rgba(0,0,0,0) 100%);
     position: relative;
 }
