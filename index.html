@@ -29,9 +29,6 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
 
-    <!-- ============================================================
-         TRACKING — Replace YOUR_PIXEL_ID and YOUR_GA4_ID with real values
-         ============================================================ -->
     <!-- Meta (Facebook) Pixel -->
     <script>
         !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -39,20 +36,11 @@
         n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
         t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
         document,'script','https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID'); // TODO: Replace YOUR_PIXEL_ID
+        fbq('init', '908862172011061');
         fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" alt=""></noscript>
-
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'YOUR_GA4_ID'); // TODO: Replace YOUR_GA4_ID
-    </script>
+        src="https://www.facebook.com/tr?id=908862172011061&ev=PageView&noscript=1" alt=""></noscript>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -1479,6 +1467,28 @@
     </section>
 
     <!-- Footer -->
+    <!-- ============================================================
+         MAP LOCATION
+         ============================================================ -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title text-center">Find Us <span class="gradient-text">Here</span></h2>
+            <p class="subtitle text-center" style="margin-bottom:2rem;">Artificia Intellec Pvt Ltd — Office No. 11, 2nd Floor, Darshanam Arise, Gotri-Sevasi Rd, opposite Osia Mall, Vadodara 391101</p>
+            <div class="map-wrapper">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.5!2d73.1229129!3d22.3182687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc958c4e6d093%3A0x12983c75e92cfedf!2sArtificia%20Intellec%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1"
+                    width="100%" height="400" style="border:0; border-radius:16px;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Artificia Intellec Pvt Ltd location on Google Maps"></iframe>
+            </div>
+            <div class="text-center" style="margin-top:1.5rem;">
+                <a href="https://www.google.com/maps/dir//Artificia+Intellec+Pvt+Ltd,+Office+No.+11,+Second+Floor,+Darshanam+Arise,+Gotri+-+Sevasi+Rd,+opposite+Osia+Mall,+Sevasi,+Vadodara,+Gujarat+391101" target="_blank" rel="noopener" class="cta-button" style="display:inline-block; padding:14px 36px;">
+                    <i class="fas fa-directions"></i> Get Directions →
+                </a>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container text-center">
             <img src="images/logo.png" alt="Artificia AI logo" style="height: 30px; margin-bottom: 20px; opacity: 0.5;" loading="lazy">
